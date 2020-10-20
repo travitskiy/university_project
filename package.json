@@ -1,0 +1,21 @@
+{
+  "name": "school_project",
+  "version": "1.0.0",
+  "description": "",
+  "main": "src/http-server.js",
+  "scripts": {
+    "run-http-server": "node src/http-server.js",
+    "run-websocket-server": "node src/websocket-server.js",
+    "run-socketio-server": "node src/socketio-server.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "colors": "^1.4.0",
+    "cookie-parser": "^1.4.5",
+    "express": "^4.17.1",
+    "socket.io": "^2.3.0",
+    "ws": "^7.3.1"
+  }
+}

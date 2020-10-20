@@ -1,0 +1,37 @@
+<script src="socket.io.js"></script>
+<script src="EventEmitter.js"></script>
+<script src="websocket-session.js"></script>
+<script>
+    const websocket = new WebsocketSession('ws://localhost:81');
+
+    websocket.on('connect', () => {
+        websocket.send('Hello from websocket client');
+    });
+
+    websocket.on('message', data => {
+        console.log(data);
+    });
+
+    const socket = io('ws://localhost:82');
+
+    socket.on('connect', () => {
+        socket.send('Hello from io client');
+    });
+
+    socket.on('message', data => {
+        console.log(data);
+    });
+
+</script>
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Hello</title>
+</head>
+<body>
+
+</body>
+</html>
