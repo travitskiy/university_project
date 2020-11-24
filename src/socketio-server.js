@@ -1,8 +1,13 @@
 const io = require('socket.io')
 const Generator = require('./generator');
 let generator = new Generator();
+
 module.exports = class SocketIOServer {
-    static started = false;
+
+    static sendActualDataToClients(server) {
+        server.sockets.emit('message', generator.generateActualData())
+    }
+
     static start(port) {
         if(SocketIOServer.started)
             return;
@@ -14,9 +19,7 @@ module.exports = class SocketIOServer {
                 console.log(data);
             });
         });
-       /* setInterval(() => {
-            server.sockets.emit('message', generator.generateActualData())
-        }, 500)*/
+        return server;
     }
 }
 

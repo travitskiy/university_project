@@ -1,4 +1,3 @@
-
 class WebsocketSession extends EventEmitter {
 
     constructor(path) {
