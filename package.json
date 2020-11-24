@@ -4,6 +4,7 @@
   "description": "",
   "main": "src/http-server.js",
   "scripts": {
+    "start":"node ./src/index.js",
     "run-http-server": "node src/http-server.js",
     "run-websocket-server": "node src/websocket-server.js",
     "run-socketio-server": "node src/socketio-server.js"

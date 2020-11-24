@@ -11,7 +11,7 @@ class WebsocketSession extends EventEmitter {
         this._ws.onopen = e => this.emit('connect', e);
         this._ws.onclose = e => this.emit('disconnect ', e);
         this._ws.onerror = e => this.emit('error ', e);
-        this._ws.onmessage = message => this.emit('message', message)
+        this._ws.onmessage = message => this.emit('message', JSON.parse(message.data))
     }
 
     send(data) {
