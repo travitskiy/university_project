@@ -2,24 +2,21 @@
 <script src="EventEmitter.js"></script>
 <script src="websocket-session.js"></script>
 <script>
-    const websocket = new WebsocketSession('ws://localhost:81');
+    /*    const socket = io('ws://localhost:82');
 
-    websocket.on('connect', () => {
-        websocket.send('Hello from websocket client');
-    });
+        socket.on('connect', () => {
+            socket.send('Hello from io client');
+        });
+
+        socket.on('message', data => {
+            console.log(data);
+        });*/
+
+    const websocket = new WebsocketSession('ws://localhost:81');
 
     websocket.on('message', data => {
         console.log(data);
-    });
 
-    const socket = io('ws://localhost:82');
-
-    socket.on('connect', () => {
-        socket.send('Hello from io client');
-    });
-
-    socket.on('message', data => {
-        console.log(data);
     });
 
 </script>
@@ -33,7 +30,7 @@
     <title>overflow</title>
     <link rel="stylesheet" type="text/css" href="css/style.css">
 </head>
-<body> 
+<body>
     <header>
         <section>
             <h1>Актуальная информация о самых известных валютах</h1>
@@ -110,28 +107,28 @@
     <section class="info-blocks scrollable-container">
         <div class="scrollable-wrapper-column">
             <div class="info-block">
-                
+
             </div>
             <div class="info-block">
-                
+
             </div>
             <div class="info-block">
-                
+
             </div>
             <div class="info-block">
-                
+
             </div>
             <div class="info-block">
-                
+
             </div>
             <div class="info-block">
-                
+
             </div>
             <div class="info-block">
-                
+
             </div>
             <div class="info-block">
-                
+
             </div>
         </div>
     </section>

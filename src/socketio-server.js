@@ -15,9 +15,11 @@ module.exports = class SocketIOServer {
 
         let server = io(port);
         server.on('connect', socket => {
+
             socket.on('message', (data) => {
                 console.log(data);
             });
+
         });
         return server;
     }
