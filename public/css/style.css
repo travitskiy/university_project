@@ -68,13 +68,78 @@ header>section{
 /*список дополнительных областей*/
 .info-blocks{
 	grid-area: info-blocks;
+	background-color: white;
 }
 
 .info-block{
 	width: 80%;
 	min-height: 200px;
 	margin: 10px;
-	background: red;
+	background: #317DA5;
+	box-shadow: 7px 7px 5px rgba(0,0,0,0.6);
+	border-radius: 20px;
+	display: grid;
+	grid-template-areas:
+		"nm nm er"
+		"ld dt ."
+		"lnc nc ."
+		"llc lc .";
+	grid-template-rows: 50% 1fr 1fr 1fr;
+	grid-template-columns: repeat(1fr,3);
+}
+
+.name{
+	grid-area: nm;
+	text-transform:uppercase;
+	font-size:2em;
+	margin: 5% 10%;
+	color: white;
+}
+
+.exchange-rate{
+	grid-area: er;
+	font-size:2em;
+	margin: 10% 10%;
+	color: white;
+}
+
+.label-date{
+	grid-area: ld;
+	margin-left: 15%;
+	color: white;
+	font-size:1.2em;
+}
+
+.date{
+	grid-area: dt;
+	color: white;
+	font-size:1.2em;
+}
+
+.label-number-code{
+	grid-area: lnc;
+	margin-left: 15%;
+	color: white;
+	font-size:1.2em;
+}
+
+.number-code{
+	grid-area: nc;
+	color: white;
+	font-size:1.2em;
+}
+
+.label-letter-code{
+	grid-area: llc;
+	margin-left: 15%;
+	color: white;
+	font-size:1.2em;
+}
+
+.letter-code{
+	grid-area: lc;
+	color: white;
+	font-size:1.2em;
 }
 
 
