@@ -5,9 +5,8 @@ body{
     ". curs schedule ."
 	". curs info-blocks ."
     "footer footer footer footer";
-	grid-template-rows: 160px 30% 1fr 60px;
+	grid-template-rows: 160px 30vh 1fr 60px;
 	grid-template-columns: 200px 1fr 2fr 200px;
-	grid-column-gap: 10px;
 	height: 100vh;
 	margin: 0;
 }
@@ -71,7 +70,7 @@ header>section{
 
 .info-block{
 	width: 80%;
-	min-height: 200px;
+	min-height: 250px;
 	margin: 10px;
 	background: #317DA5;
 	box-shadow: 7px 7px 5px rgba(0,0,0,0.6);
@@ -82,8 +81,9 @@ header>section{
 		"ld dt ."
 		"lnc nc ."
 		"llc lc .";
-	grid-template-rows: 50% 1fr 1fr 1fr;
+	grid-template-rows: 30% 1fr 1fr 1fr;
 	grid-template-columns: 1fr 1fr 1fr;
+	grid-gap: 5px;
 }
 
 .name{
@@ -179,7 +179,7 @@ footer>section{
 .scrollable-container {
     overflow: auto; /* Добавляем полосы прокрутки */
     padding: 5px; /* Поля вокруг текста */
-    border: solid 0px black; /* Параметры рамки */
+    border: solid 0 black; /* Параметры рамки */
 } 
 
 
@@ -200,7 +200,7 @@ background-color:#ecedee
 }
 
 ::-webkit-scrollbar-thumb {
--webkit-border-radius: 0px;
+-webkit-border-radius: 0;
 border-radius: 40px;
 background-color:#6dc0c8;
 }
