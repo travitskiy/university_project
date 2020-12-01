@@ -1,34 +1,37 @@
 body{
 	display: grid;
 	grid-template-areas: 
-    "header header header header"
-    ". curs schedule ."
-	". curs info-blocks ."
-    "footer footer footer footer";
-	grid-template-rows: 160px 30vh 1fr 60px;
-	grid-template-columns: 200px 1fr 2fr 200px;
+    "header header header"
+	"curs info-blocks schedule"
+    "footer footer footer";
+	grid-template-rows: 110px 1fr 60px;
+	grid-template-columns: 180px 500px 1fr;
 	height: 100vh;
 	margin: 0;
+	font-family: 'Roboto', sans-serif;
 }
 
 header, .currencys-wrapper, .info-blocks, footer{
 	padding: 20px;
-	border: solid 1px black; /* Параметры рамки */
+	/*border: solid 1px black; !* Параметры рамки *!*/
 }
 
 
 
-
+a{
+	text-decoration: none;
+}
 
 
 /*верхний колонтитул*/
 header{
 	grid-area: header;
-	padding: 0;
+	background-color: #3E38F2;
+	padding: 10px 0;
 }
 
 header>section{
-	width: 70%;
+	width: 80%;
 	height: 100%;
 	margin: 0 auto;
 	display: flex;
@@ -37,8 +40,36 @@ header>section{
 	justify-content: space-between;
 }
 
+header>section>h1{
+	color: white;
+	text-transform: uppercase;
+	font-size: 36px;
+	margin: 0;
+	width: 50%;
+}
 
+header .buttons{
+	width: 30%;
+	display: flex;
+	flex-flow: row wrap;
+	align-items: center;
+	justify-content: space-around;
+}
 
+header .buttons>a{
+	background: #FFFFFF;
+	box-shadow: 0 0 21px 5px #2C28A7;
+	border-radius: 35px;
+	padding: 20px 40px;
+	/*font-weight: bold;*/
+	color: black;
+}
+
+header .buttons>.btn_disabled{
+	background: #707070;
+	box-shadow: none;
+	border-radius: 35px;
+}
 
 
 
@@ -54,9 +85,14 @@ header>section{
 .currencys-wrapper>ul>li{
 	margin: 10px;
 	padding: 10px 30px;
-	border: solid 1px black;
+	/*border: solid 1px black;*/
 }
 
+.currencys-wrapper>ul>li>a{
+	text-transform: uppercase;
+	font-weight: bold;
+	color: black;
+}
 
 
 
@@ -65,11 +101,11 @@ header>section{
 /*список дополнительных областей*/
 .info-blocks{
 	grid-area: info-blocks;
-	background-color: white;
+	/*background-color: white;*/
 }
 
 .info-block{
-	width: 80%;
+	width: 90%;
 	min-height: 250px;
 	margin: 10px;
 	background: #317DA5;
@@ -77,70 +113,78 @@ header>section{
 	border-radius: 20px;
 	display: grid;
 	grid-template-areas:
-		"nm nm er"
-		"ld dt ."
-		"lnc nc ."
-		"llc lc .";
+		"nm er"
+		"ld dt"
+		"lnc nc"
+		"llc lc";
 	grid-template-rows: 30% 1fr 1fr 1fr;
-	grid-template-columns: 1fr 1fr 1fr;
+	grid-template-columns: 1fr 1.5fr;
 	grid-gap: 5px;
+	color: white;
 }
 
 .name{
 	grid-area: nm;
 	text-transform:uppercase;
 	font-size:2em;
-	margin: 5% 10%;
-	color: white;
+	margin-left: 15%;
+	margin-top: 15%;
+	/*margin: 5% 10%;*/
 }
 
 .exchange-rate{
 	grid-area: er;
 	font-size:2em;
-	margin: 10% 10%;
-	color: white;
+	margin-top: 10%;
+	/*margin: 10% 10%;*/
 }
 
 .label-date{
 	grid-area: ld;
 	margin-left: 15%;
-	color: white;
 	font-size:1.2em;
 }
 
 .date{
 	grid-area: dt;
-	color: white;
 	font-size:1.2em;
 }
 
 .label-number-code{
 	grid-area: lnc;
 	margin-left: 15%;
-	color: white;
 	font-size:1.2em;
 }
 
 .number-code{
 	grid-area: nc;
-	color: white;
 	font-size:1.2em;
 }
 
 .label-letter-code{
 	grid-area: llc;
 	margin-left: 15%;
-	color: white;
 	font-size:1.2em;
 }
 
 .letter-code{
 	grid-area: lc;
-	color: white;
 	font-size:1.2em;
 }
 
 
+
+/*область графиков*/
+.schedule-wrapper{
+	margin: 3%;
+}
+
+.schedule{
+	width: 100%;
+	height: 100%;
+	box-shadow: 0 0 12px 3px rgba(0, 0, 0, 0.25);
+	border-radius: 15px;
+}
 
 
 
@@ -148,11 +192,12 @@ header>section{
 /*нижний колонтитул*/
 footer{
 	grid-area: footer;
+	background-color: #444;
 	padding: 0;
 }
 
 footer>section{
-	width: 70%;
+	width: 60%;
 	height: 100%;
 	margin: 0 auto;
 	display: flex;
@@ -161,6 +206,11 @@ footer>section{
 	justify-content: flex-end;
 }
 
+footer>section>h3{
+	margin: 0;
+	color: white;
+	font-size: 24px;
+}
 
 
 
@@ -178,7 +228,7 @@ footer>section{
 /*контейнер для скрола*/
 .scrollable-container {
     overflow: auto; /* Добавляем полосы прокрутки */
-    padding: 5px; /* Поля вокруг текста */
+	padding: 0; /* Поля вокруг текста */
     border: solid 0 black; /* Параметры рамки */
 } 
 
