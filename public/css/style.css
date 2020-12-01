@@ -94,6 +94,10 @@ header .buttons>.btn_disabled{
 	padding: 5px 10px;
 }
 
+.selected-currency{
+	margin-left: 3em;
+}
+
 
 
 

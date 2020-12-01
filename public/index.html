@@ -19,15 +19,22 @@
 
     });
 
+
+
+    // Create a new line chart object where as first parameter we pass in a selector
+    // that is resolving to our chart container element. The Second parameter
+    // is the actual data object.
+
+
 </script>
 
 
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ru">
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>overflow</title>
+    <title>SocketioORwebsocket</title>
     <link rel="stylesheet" type="text/css" href="css/style.css">
     <link rel="preconnect" href="https://fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300&display=swap" rel="stylesheet">
@@ -45,71 +52,14 @@
         </section>
     </header>
     <nav class="currencys-wrapper scrollable-container">
-        <ul class="scrollable-wrapper-column">
+        <ul id="currency-container" class="scrollable-wrapper-column">
             <li>
-                <a href="">Currency</a>
-            </li>
-            <li>
-                <a href="">Currency</a>
-            </li>
-            <li>
-                <a href="">Currency</a>
-            </li>
-            <li>
-                <a href="">Currency</a>
-            </li>
-            <li>
-                <a href="">Currency</a>
-            </li>
-            <li>
-                <a href="">Currency</a>
-            </li>
-            <li>
-                <a href="">Currency</a>
-            </li>
-            <li>
-                <a href="">Currency</a>
-            </li>
-            <li>
-                <a href="">Currency</a>
-            </li>
-            <li>
-                <a href="">Currency</a>
-            </li>
-            <li>
-                <a href="">Currency</a>
-            </li>
-            <li>
-                <a href="">Currency</a>
-            </li>
-            <li>
-                <a href="">Currency</a>
-            </li>
-            <li>
-                <a href="">Currency</a>
-            </li>
-            <li>
-                <a href="">Currency</a>
-            </li>
-            <li>
-                <a href="">Currency</a>
-            </li>
-            <li>
-                <a href="">Currency</a>
-            </li>
-            <li>
-                <a href="">Currency</a>
-            </li>
-            <li>
-                <a href="">Currency</a>
-            </li>
-            <li>
-                <a href="">Currency</a>
+                <a href="javascript:TouchCurrency('dollar');">Currency</a>
             </li>
         </ul>
     </nav>
     <section class="info-blocks scrollable-container">
-        <div class="scrollable-wrapper-column">
+        <div id="info-blocks-container" class="scrollable-wrapper-column">
             <div class="info-block">
                 <div class="name" id="name-first-currency">Доллар</div>
                 <div class="exchange-rate" id="exchange-rate-first-currency">75,86</div>
@@ -120,96 +70,12 @@
                 <div class="label-letter-code">Буквенный код:</div>
                 <div class="letter-code" id="letter-code-first-currency">USD</div>
             </div>
-            <div class="info-block">
-                <div class="name" id="name-second-currency"></div>
-                <div class="exchange-rate" id="exchange-rate-second-currency"></div>
-                <div class="label-date">Дата:</div>
-                <div class="date" id="date-second-currency"></div>
-                <div class="label-number-code">Цифровой код:</div>
-                <div class="number-code" id="number-code-second-currency"></div>
-                <div class="label-letter-code">Буквенный код:</div>
-                <div class="letter-code" id="letter-code-second-currency"></div>
-            </div>
-            <div class="info-block">
-                <div class="name" id="name-third-currency"></div>
-                <div class="exchange-rate" id="exchange-rate-third-currency"></div>
-                <div class="label-date">Дата:</div>
-                <div class="date" id="date-third-currency"></div>
-                <div class="label-number-code">Цифровой код:</div>
-                <div class="number-code" id="number-code-third-currency"></div>
-                <div class="label-letter-code">Буквенный код:</div>
-                <div class="letter-code" id="letter-code-third-currency"></div>
-            </div>
-            <div class="info-block">
-                <div class="name" id="name-fourth-currency"></div>
-                <div class="exchange-rate" id="exchange-rate-fourth-currency"></div>
-                <div class="label-date">Дата:</div>
-                <div class="date" id="date-fourth-currency"></div>
-                <div class="label-number-code">Цифровой код:</div>
-                <div class="number-code" id="number-code-fourth-currency"></div>
-                <div class="label-letter-code">Буквенный код:</div>
-                <div class="letter-code" id="letter-code-fourth-currency"></div>
-            </div>
-            <div class="info-block">
-                <div class="name" id="name-fifth-currency"></div>
-                <div class="exchange-rate" id="exchange-rate-fifth-currency"></div>
-                <div class="label-date">Дата:</div>
-                <div class="date" id="date-fifth-currency"></div>
-                <div class="label-number-code">Цифровой код:</div>
-                <div class="number-code" id="number-code-fifth-currency"></div>
-                <div class="label-letter-code">Буквенный код:</div>
-                <div class="letter-code" id="letter-code-fifth-currency"></div>
-            </div>
-            <div class="info-block">
-                <div class="name" id="name-sixth-currency"></div>
-                <div class="exchange-rate" id="exchange-rate-sixth-currency"></div>
-                <div class="label-date">Дата:</div>
-                <div class="date" id="date-sixth-currency"></div>
-                <div class="label-number-code">Цифровой код:</div>
-                <div class="number-code" id="number-code-sixth-currency"></div>
-                <div class="label-letter-code">Буквенный код:</div>
-                <div class="letter-code" id="letter-code-sixth-currency"></div>
-            </div>
-            <div class="info-block">
-                <div class="name" id="name-seventh-currency"></div>
-                <div class="exchange-rate" id="exchange-rate-seventh-currency"></div>
-                <div class="label-date">Дата:</div>
-                <div class="date" id="date-seventh-currency"></div>
-                <div class="label-number-code">Цифровой код:</div>
-                <div class="number-code" id="number-code-seventh-currency"></div>
-                <div class="label-letter-code">Буквенный код:</div>
-                <div class="letter-code" id="letter-code-seventh-currency"></div>
-            </div>
-            <div class="info-block">
-                <div class="name" id="name-eighth-currency"></div>
-                <div class="exchange-rate" id="exchange-rate-eighth-currency"></div>
-                <div class="label-date">Дата:</div>
-                <div class="date" id="date-eighth-currency"></div>
-                <div class="label-number-code">Цифровой код:</div>
-                <div class="number-code" id="number-code-eighth-currency"></div>
-                <div class="label-letter-code">Буквенный код:</div>
-                <div class="letter-code" id="letter-code-eighth-currency"></div>
-            </div>
         </div>
     </section>
     <section class="schedule-wrapper">
         <div class="schedule">
             <div class="ct-chart ct-major-seventh"></div>
-            <script>
-                var data = {
-                    // A labels array that can contain any sort of values
-                    labels: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri'],
-                    // Our series array that contains series objects or in this case series data arrays
-                    series: [
-                        [5, 2, 4, 2, 10]
-                    ]
-                };
 
-                // Create a new line chart object where as first parameter we pass in a selector
-                // that is resolving to our chart container element. The Second parameter
-                // is the actual data object.
-                var myChart = new Chartist.Line('.ct-chart', data);
-            </script>
         </div>
     </section>
     <footer>
@@ -217,5 +83,134 @@
             <h3>SocketioORwebsocket</h3>
         </section>
     </footer>
+    <script>
+        var data_for_schedule = {
+            // A labels array that can contain any sort of values
+            labels: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri'],
+            // Our series array that contains series objects or in this case series data arrays
+            series: [
+                [5, 2, 4, 2, 10]
+            ]
+        };
+        function PaintStartSchedule() {
+            var myChart = new Chartist.Line('.ct-chart', data_for_schedule);
+        }
+        PaintStartSchedule();
+
+
+
+        var currencies_data = [
+            {
+                name: "usd",
+                code: 1,
+                date: new Date().getTime(),
+                price: Math.random()
+            },
+            {
+                name: "eur",
+                code: 2,
+                date: new Date().getTime(),
+                price: Math.random()
+            },
+            {
+                name: "lir",
+                code: 3,
+                date: new Date().getTime(),
+                price: Math.random()
+            },
+            {
+                name: "tui",
+                code: 4,
+                date: new Date().getTime(),
+                price: Math.random()
+            },
+
+        ];
+        var currencyContainer = document.getElementById("currency-container");
+        var infoBlocksContainer = document.getElementById("info-blocks-container");
+
+        function ClearCurrencies() {
+            currencyContainer.innerHTML = "";
+        }
+        
+        function ClearInfoBlocks() {
+            infoBlocksContainer.innerHTML = "";
+        }
+
+        function AddNewCurrency(currencyName) {
+            currencyContainer.innerHTML += "<li><a id=\""
+                + currencyName + "-button"
+                + "\" href=\"javascript:TouchCurrency('"
+                + currencyName + "');\">" + currencyName +"</a></li>";
+        }
+
+        function AddNewCurrencyBlock(currencyName, currencyCode, currencyDate, currencyPrice) {
+            var blockId = currencyName + "-currency-container";
+            infoBlocksContainer.innerHTML += "<div id=\""
+                + blockId
+                + "\" style=\"display: none\" class=\"info-block\">\n</div>";
+
+            UpdateDataInCurrencyBlock(currencyName);
+        }
+        
+        function UpdateDataInCurrencyBlock(currencyName) {
+            var blockId = currencyName + "-currency-container";
+            var infoBlock = document.getElementById(blockId);
+
+            var currencyPrice = "";
+            var currencyDate = "";
+            var currencyCode = "";
+
+            for(var i = 0; i < currencies_data.length; i++){
+                if(currencies_data[i].name === currencyName){
+                    currencyPrice = currencies_data[i].price;
+                    currencyDate = currencies_data[i].date;
+                    currencyCode = currencies_data[i].code;
+                }
+            }
+
+            infoBlock.innerHTML = "<div class=\"name\">" + currencyName + "</div>\n" +
+                "<div class=\"exchange-rate\">" + currencyPrice + "</div>\n" +
+                "<div class=\"label-date\">Дата:</div>\n" +
+                "<div class=\"date\">" + currencyDate + "</div>\n" +
+                "<div class=\"label-number-code\">Цифровой код:</div>\n" +
+                "<div class=\"number-code\">" + currencyCode + "</div>\n" +
+                "<div class=\"label-letter-code\">Буквенный код:</div>\n" +
+                "<div class=\"letter-code\"></div>";
+        }
+
+        function ParseDataBeforeStart() {
+            ClearCurrencies();
+            ClearInfoBlocks();
+            currencies_data.forEach(function (item) {
+                AddNewCurrency(item.name);
+                AddNewCurrencyBlock(item.name, item.code, item.date, item.price);
+            })
+        }
+
+        ParseDataBeforeStart();
+
+        function OpenInfoBlock(currencyName){
+            var infoBlock = document.getElementById(currencyName + "-currency-container");
+            
+            if (infoBlock.style.display === "none") {
+                infoBlock.style.display = "grid";
+                UpdateDataInCurrencyBlock(currencyName);
+                return "on";
+            } else {
+                infoBlock.style.display = "none";
+                return "off";
+            }
+        }
+
+        function TouchCurrency(currencyName) {
+            var currencyButton = document.getElementById(currencyName + "-button");
+            if(OpenInfoBlock(currencyName) === "on"){
+                currencyButton.classList.add("selected-currency");
+            } else {
+                currencyButton.classList.remove("selected-currency");
+            }
+        }
+    </script>
 </body>
 </html>
