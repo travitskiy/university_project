@@ -2,11 +2,11 @@ module.exports = class Generator {
     generateActualData() {
         return [
             {
-            name: "usd",
-            code: 1,
-            date: new Date().getTime(),
-            price: Math.random()
-        },
+                name: "usd",
+                code: 1,
+                date: new Date().getTime(),
+                price: Math.random()
+            },
             {
                 name: "eur",
                 code: 2,
