@@ -6,9 +6,10 @@ let generator = new Generator();
 module.exports = class WebsocketServer {
 
     static sendActualDataToClients(ws) {
+        let  data = JSON.stringify(generator.generateActualData())
         ws.clients.forEach(function each(client) {
             if (client !== ws && client.readyState === WebSocket.OPEN)
-                client.send(JSON.stringify(generator.generateActualData()));
+                client.send(data);
         });
     }
 
