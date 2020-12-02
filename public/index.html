@@ -12,13 +12,6 @@
             console.log(data);
         });*/
 
-    const websocket = new WebsocketSession('ws://localhost:81');
-
-    websocket.on('message', data => {
-        console.log(data);
-
-    });
-
 
 
     // Create a new line chart object where as first parameter we pass in a selector
@@ -99,33 +92,13 @@
 
 
 
-        var currencies_data = [
-            {
-                name: "usd",
-                code: 1,
-                date: new Date().getTime(),
-                price: Math.random()
-            },
-            {
-                name: "eur",
-                code: 2,
-                date: new Date().getTime(),
-                price: Math.random()
-            },
-            {
-                name: "lir",
-                code: 3,
-                date: new Date().getTime(),
-                price: Math.random()
-            },
-            {
-                name: "tui",
-                code: 4,
-                date: new Date().getTime(),
-                price: Math.random()
-            },
+        var currencies_data = [];
+        const websocket = new WebsocketSession('ws://localhost:81');
+        websocket.on('message', data => {
+            console.log(data);
+            currencies_data = data;
+        });
 
-        ];
         var currencyContainer = document.getElementById("currency-container");
         var infoBlocksContainer = document.getElementById("info-blocks-container");
 
@@ -161,7 +134,7 @@
             var currencyDate = "";
             var currencyCode = "";
 
-            for(var i = 0; i < currencies_data.length; i++){
+            for(var i = 0; i < data.length; i++){
                 if(currencies_data[i].name === currencyName){
                     currencyPrice = currencies_data[i].price;
                     currencyDate = currencies_data[i].date;
@@ -185,7 +158,7 @@
             currencies_data.forEach(function (item) {
                 AddNewCurrency(item.name);
                 AddNewCurrencyBlock(item.name, item.code, item.date, item.price);
-            })
+            });
         }
 
         ParseDataBeforeStart();
@@ -208,9 +181,4 @@
             if(OpenInfoBlock(currencyName) === "on"){
                 currencyButton.classList.add("selected-currency");
             } else {
-                currencyButton.classList.remove("selected-currency");
-            }
-        }
-    </script>
-</body>
-</html>
+                currencyButton.classList.remov
