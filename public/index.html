@@ -77,6 +77,8 @@
         </section>
     </footer>
     <script>
+
+
         var data_for_schedule = {
             // A labels array that can contain any sort of values
             labels: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri'],
@@ -90,13 +92,19 @@
         }
         PaintStartSchedule();
 
-
-
         var currencies_data = [];
         const websocket = new WebsocketSession('ws://localhost:81');
+        document.flag = false;
         websocket.on('message', data => {
             console.log(data);
             currencies_data = data;
+
+            if(!document.flag) {
+                ParseDataBeforeStart()
+                document.flag = true;
+            }
+            for(let cur of data)
+                UpdateDataInCurrencyBlock(cur.name);
         });
 
         var currencyContainer = document.getElementById("currency-container");
@@ -105,7 +113,7 @@
         function ClearCurrencies() {
             currencyContainer.innerHTML = "";
         }
-        
+
         function ClearInfoBlocks() {
             infoBlocksContainer.innerHTML = "";
         }
@@ -125,7 +133,7 @@
 
             UpdateDataInCurrencyBlock(currencyName);
         }
-        
+
         function UpdateDataInCurrencyBlock(currencyName) {
             var blockId = currencyName + "-currency-container";
             var infoBlock = document.getElementById(blockId);
@@ -134,7 +142,7 @@
             var currencyDate = "";
             var currencyCode = "";
 
-            for(var i = 0; i < data.length; i++){
+            for(var i = 0; i < currencies_data.length; i++){
                 if(currencies_data[i].name === currencyName){
                     currencyPrice = currencies_data[i].price;
                     currencyDate = currencies_data[i].date;
@@ -161,11 +169,11 @@
             });
         }
 
-        ParseDataBeforeStart();
+
 
         function OpenInfoBlock(currencyName){
             var infoBlock = document.getElementById(currencyName + "-currency-container");
-            
+
             if (infoBlock.style.display === "none") {
                 infoBlock.style.display = "grid";
                 UpdateDataInCurrencyBlock(currencyName);

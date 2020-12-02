@@ -19,7 +19,6 @@ module.exports = class WebsocketServer {
 
         const ws = new WebSocket.Server({port: port});
         ws.on('connection', (ws) => {
-            ws.send('Hello from websocket server');
             ws.on('message', (message) => {
                 console.log(message);
             });
