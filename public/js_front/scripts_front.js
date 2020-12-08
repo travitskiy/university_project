@@ -20,10 +20,27 @@ function PaintStartSchedule() {
 }
 PaintStartSchedule();
 
+/*
+Обновление графика
+*/
+function UpdateChart() {
+    data_for_schedule = {
+        labels: dateLabels,
+        series: nowSeeCurrenciesPrices
+    }
+    myChart.update();
+}
 
 
 
 
+
+//режим валюты (смотрим/не смотрим)
+const currencyMode = {
+    can_see : 1,
+    cant_see : 2
+};
+Object.freeze(currencyMode);
 //контейнер для кнопок меню
 var currencyContainer = document.getElementById("currency-container");
 //контейнер для дополнительных областей
@@ -32,43 +49,70 @@ var infoBlocksContainer = document.getElementById("info-blocks-container");
 let dateLabels = [];
 //список порядковых номеров валют, которые открыты для просмотра в данный момент
 let nowSeeCurrenciesIndexes = [];
-//общий массив массивов цен на валюты
-let currenciesDataPrice = [];
-//массив ссылок на массивы цен на валюты, просматриваемых в данный момент
-let nowSeeCurrenciesDataPrice = [];
+//массив массивов цен на валюты
+let nowSeeCurrenciesPrices = [];
+
+
 
 /*
 обновление списка последних 50-ти дат
 */
-function UpdateDateLabels(currency){
+function UpdateDateLabels(currencyDate){
     if(dateLabels.length < 50){
-        dateLabels.push(currency.date);
+        dateLabels.push(currencyDate);
     } else {
         dateLabels.shift();
-        dateLabels.push(currency.date);
+        dateLabels.push(currencyDate);
     }
 }
 
 /*
-инициализация массива массивов цен на валюты
+инициализация массива флагов просматриваемых валют в данный момент
 */
-function initCurrenciesDataPrice(count) {
-    for (var i = 0; i < count; i++){
-        currenciesDataPrice.push([]);
+function initNowSeeCurrenciesIndexes() {
+    for (var i = 0; i < currencies_data.length; i++){
+        nowSeeCurrenciesIndexes.push(currencyMode.cant_see);
+    }
+}
+
+/*
+устанавливаем нужную валюту в нужный режим
+*/
+function SetNowSeeCurrencyIndex(currencyName, mode) {
+    for(var i = 0; i < currencies_data.length; i++){
+        if(currencies_data[i].name === currencyName){
+                nowSeeCurrenciesIndexes[i] = mode;
+        }
+    }
+}
+
+/*
+добавление очередной цены для определённой валюты для вывода на график
+*/
+function SetNowSeeCurrenciesPrice(price, index) {
+    if(nowSeeCurrenciesPrices[index].length < 50) {
+        nowSeeCurrenciesPrices[index].push(price);
+    } else {
+        nowSeeCurrenciesPrices[index].shift();
+        nowSeeCurrenciesPrices[index].push(price);
     }
 }
 
 /*
 обновление массива цен валюты внутри общего массива массивов
 */
-function UpdateCurrenciesDataPrice(currency, index) {
-    if(currenciesDataPrice[index].length < 50){
-        currenciesDataPrice[index].push(currency.price);
-    } else {
-        currenciesDataPrice[index].shift();
-        currenciesDataPrice[index].push(currency.price);
+function UpdateNowSeeCurrenciesPrices(index) {
+    nowSeeCurrenciesPrices = [];
+    if (nowSeeCurrenciesIndexes[index] === currencyMode.can_see){
+        nowSeeCurrenciesPrices.push([]);
     }
 }
+
+
+
+
+
+
 
 /*
 функция добавления новой валюты в список валют
@@ -129,12 +173,15 @@ function AddNewCurrencyBlock(currencyName) {
 function ParseDataBeforeStart() {
     currencyContainer.innerHTML = "";
     infoBlocksContainer.innerHTML = "";
-    initCurrenciesDataPrice(currencies_data.length);
+
+    initNowSeeCurrenciesIndexes();
     currencies_data.forEach(function (item) {
         AddNewCurrency(item.name);
         AddNewCurrencyBlock(item.name)
     });
 }
+
+
 
 
 
@@ -155,13 +202,20 @@ websocket.on('message', data => {
         document.flag = true;
     }
 
-    var indexOfCur = 0;
-    data.forEach(function (cur, ind) {
+    UpdateDateLabels(currencies_data[0].date);
+    var index= 0;
+    currencies_data.forEach(function (cur, ind) {
         UpdateDataInCurrencyBlock(cur.name);
-        UpdateDateLabels(cur);
-        UpdateCurrenciesDataPrice(cur,ind);
+        if(nowSeeCurrenciesIndexes[ind] === currencyMode.can_see){
+            SetNowSeeCurrenciesPrice(cur.price, index);
+            index++;
+        }
     })
+    UpdateChart();
 });
+
+
+
 
 
 
@@ -178,9 +232,11 @@ function OpenInfoBlock(currencyName){
     if (infoBlock.style.display === "none") {
         infoBlock.style.display = "grid";
         UpdateDataInCurrencyBlock(currencyName);
+        SetNowSeeCurrencyIndex(currencyName, currencyMode.can_see);
         return "on";
     } else {
         infoBlock.style.display = "none";
+        SetNowSeeCurrencyIndex(currencyName, currencyMode.cant_see);
         return "off";
     }
 }
@@ -195,4 +251,8 @@ function TouchCurrency(currencyName) {
     } else {
         currencyButton.classList.remove("selected-currency");
     }
+    currencies_data.forEach(function (cur, ind) {
+        UpdateNowSeeCurrenciesPrices(ind);
+    })
+    dateLabels = [];
 }
