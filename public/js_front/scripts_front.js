@@ -30,8 +30,12 @@ var currencyContainer = document.getElementById("currency-container");
 var infoBlocksContainer = document.getElementById("info-blocks-container");
 //список последних 50-ти дат получения данных
 let dateLabels = [];
-//список имён валют, которые открыты для просмотра в данный момент
-let nowSeeCurrenciesNames = [];
+//список порядковых номеров валют, которые открыты для просмотра в данный момент
+let nowSeeCurrenciesIndexes = [];
+//общий массив массивов цен на валюты
+let currenciesDataPrice = [];
+//массив ссылок на массивы цен на валюты, просматриваемых в данный момент
+let nowSeeCurrenciesDataPrice = [];
 
 /*
 обновление списка последних 50-ти дат
@@ -42,6 +46,27 @@ function UpdateDateLabels(currency){
     } else {
         dateLabels.shift();
         dateLabels.push(currency.date);
+    }
+}
+
+/*
+инициализация массива массивов цен на валюты
+*/
+function initCurrenciesDataPrice(count) {
+    for (var i = 0; i < count; i++){
+        currenciesDataPrice.push([]);
+    }
+}
+
+/*
+обновление массива цен валюты внутри общего массива массивов
+*/
+function UpdateCurrenciesDataPrice(currency, index) {
+    if(currenciesDataPrice[index].length < 50){
+        currenciesDataPrice[index].push(currency.price);
+    } else {
+        currenciesDataPrice[index].shift();
+        currenciesDataPrice[index].push(currency.price);
     }
 }
 
@@ -104,9 +129,10 @@ function AddNewCurrencyBlock(currencyName) {
 function ParseDataBeforeStart() {
     currencyContainer.innerHTML = "";
     infoBlocksContainer.innerHTML = "";
+    initCurrenciesDataPrice(currencies_data.length);
     currencies_data.forEach(function (item) {
         AddNewCurrency(item.name);
-        AddNewCurrencyBlock(item.name);
+        AddNewCurrencyBlock(item.name)
     });
 }
 
@@ -128,10 +154,13 @@ websocket.on('message', data => {
         ParseDataBeforeStart()
         document.flag = true;
     }
-    for(let cur of data){
+
+    var indexOfCur = 0;
+    data.forEach(function (cur, ind) {
         UpdateDataInCurrencyBlock(cur.name);
         UpdateDateLabels(cur);
-    }
+        UpdateCurrenciesDataPrice(cur,ind);
+    })
 });
 
 
