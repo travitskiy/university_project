@@ -78,7 +78,9 @@
     </footer>
     <script>
 
-
+        /*
+        структура для графика
+        */
         var data_for_schedule = {
             // A labels array that can contain any sort of values
             labels: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri'],
@@ -87,37 +89,44 @@
                 [5, 2, 4, 2, 10]
             ]
         };
+
+        /*
+        метод для первой отрисовки графика
+        */
+        var myChart; //публичная переменная для хранения ссылки на график
         function PaintStartSchedule() {
-            var myChart = new Chartist.Line('.ct-chart', data_for_schedule);
+            myChart = new Chartist.Line('.ct-chart', data_for_schedule);
         }
         PaintStartSchedule();
 
-        var currencies_data = [];
-        const websocket = new WebsocketSession('ws://localhost:81');
-        document.flag = false;
-        websocket.on('message', data => {
-            console.log(data);
-            currencies_data = data;
 
-            if(!document.flag) {
-                ParseDataBeforeStart()
-                document.flag = true;
-            }
-            for(let cur of data)
-                UpdateDataInCurrencyBlock(cur.name);
-        });
 
+
+
+        //контейнер для кнопок меню
         var currencyContainer = document.getElementById("currency-container");
+        //контейнер для дополнительных областей
         var infoBlocksContainer = document.getElementById("info-blocks-container");
+        //список последних 50-ти дат получения данных
+        let dateLabels = [];
+        //список имён валют, которые открыты для просмотра в данный момент
+        let nowSeeCurrenciesNames = [];
 
-        function ClearCurrencies() {
-            currencyContainer.innerHTML = "";
+        /*
+        обновление списка последних 50-ти дат
+        */
+        function UpdateDateLabels(currency){
+            if(dateLabels.length < 50){
+                dateLabels.push(currency.date);
+            } else {
+                dateLabels.shift();
+                dateLabels.push(currency.date);
+            }
         }
 
-        function ClearInfoBlocks() {
-            infoBlocksContainer.innerHTML = "";
-        }
-
+        /*
+        функция добавления новой валюты в список валют
+        */
         function AddNewCurrency(currencyName) {
             currencyContainer.innerHTML += "<li><a id=\""
                 + currencyName + "-button"
@@ -125,15 +134,9 @@
                 + currencyName + "');\">" + currencyName +"</a></li>";
         }
 
-        function AddNewCurrencyBlock(currencyName, currencyCode, currencyDate, currencyPrice) {
-            var blockId = currencyName + "-currency-container";
-            infoBlocksContainer.innerHTML += "<div id=\""
-                + blockId
-                + "\" style=\"display: none\" class=\"info-block\">\n</div>";
-
-            UpdateDataInCurrencyBlock(currencyName);
-        }
-
+        /*
+        обновление информации по валюте в блок доп информации
+        */
         function UpdateDataInCurrencyBlock(currencyName) {
             var blockId = currencyName + "-currency-container";
             var infoBlock = document.getElementById(blockId);
@@ -160,17 +163,65 @@
                 "<div class=\"letter-code\"></div>";
         }
 
+        /*
+        добавление нового блока с дополнительной информацией
+        */
+        function AddNewCurrencyBlock(currencyName) {
+            var blockId = currencyName + "-currency-container";
+            infoBlocksContainer.innerHTML += "<div id=\""
+                + blockId
+                + "\" style=\"display: none\" class=\"info-block\">\n</div>";
+
+            UpdateDataInCurrencyBlock(currencyName);
+        }
+
+        /*
+        Предстартовое насыщение страницы списком валют
+        и областями для предпросмотра.
+        Все области изначально хранят display:none.
+        */
         function ParseDataBeforeStart() {
-            ClearCurrencies();
-            ClearInfoBlocks();
+            currencyContainer.innerHTML = "";
+            infoBlocksContainer.innerHTML = "";
             currencies_data.forEach(function (item) {
                 AddNewCurrency(item.name);
-                AddNewCurrencyBlock(item.name, item.code, item.date, item.price);
+                AddNewCurrencyBlock(item.name);
             });
         }
 
 
 
+
+
+        /*
+        получение новых данных и их обновление
+        */
+        var currencies_data = [];
+        const websocket = new WebsocketSession('ws://localhost:81');
+        document.flag = false;
+        websocket.on('message', data => {
+            console.log(data);
+            currencies_data = data;
+
+            if(!document.flag) {
+                ParseDataBeforeStart()
+                document.flag = true;
+            }
+            for(let cur of data){
+                UpdateDataInCurrencyBlock(cur.name);
+                UpdateDateLabels(cur);
+            }
+        });
+
+
+
+
+
+
+
+        /*
+        открытие блока дополнительных данных
+        */
         function OpenInfoBlock(currencyName){
             var infoBlock = document.getElementById(currencyName + "-currency-container");
 
@@ -184,6 +235,9 @@
             }
         }
 
+        /*
+        функция для кнопки меню
+        */
         function TouchCurrency(currencyName) {
             var currencyButton = document.getElementById(currencyName + "-button");
             if(OpenInfoBlock(currencyName) === "on"){
