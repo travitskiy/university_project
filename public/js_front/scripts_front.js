@@ -2,7 +2,7 @@
 /*
 структура для графика
 */
-var data_for_schedule = {
+let data_for_schedule = {
     // A labels array that can contain any sort of values
     labels: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri'],
     // Our series array that contains series objects or in this case series data arrays
@@ -33,8 +33,12 @@ function UpdateChart() {
 
 
 
-
-
+//режим получения данных
+const dataMode = {
+    _websocket : 1,
+    _socketio : 2
+}
+var getDataMode = dataMode._websocket;
 //режим валюты (смотрим/не смотрим)
 const currencyMode = {
     can_see : 1,
@@ -64,6 +68,13 @@ function UpdateDateLabels(currencyDate){
         dateLabels.shift();
         dateLabels.push(currencyDate);
     }
+}
+
+/*
+отчищаем лейблы дат
+*/
+function ClearDateLabels() {
+    dateLabels = [];
 }
 
 /*
@@ -174,7 +185,9 @@ function ParseDataBeforeStart() {
     currencyContainer.innerHTML = "";
     infoBlocksContainer.innerHTML = "";
 
+    ClearDateLabels();
     initNowSeeCurrenciesIndexes();
+    UpdateNowSeeCurrenciesPrices();
     currencies_data.forEach(function (item) {
         AddNewCurrency(item.name);
         AddNewCurrencyBlock(item.name)
@@ -192,27 +205,56 @@ function ParseDataBeforeStart() {
 */
 var currencies_data = [];
 const websocket = new WebsocketSession('ws://localhost:81');
-document.flag = false;
-websocket.on('message', data => {
-    console.log(data);
-    currencies_data = data;
+const socket = io('ws://localhost:82');
+var flag = false;
+if(getDataMode === dataMode._websocket) {
+    websocket.on('message', data => {
+        console.log(data);
+        currencies_data = data;
 
-    if(!document.flag) {
-        ParseDataBeforeStart()
-        document.flag = true;
-    }
-
-    UpdateDateLabels(currencies_data[0].date);
-    var index= 0;
-    currencies_data.forEach(function (cur, ind) {
-        UpdateDataInCurrencyBlock(cur.name);
-        if(nowSeeCurrenciesIndexes[ind] === currencyMode.can_see){
-            SetNowSeeCurrenciesPrice(cur.price, index);
-            index++;
+        if (!flag) {
+            ParseDataBeforeStart()
+            flag = true;
         }
-    })
-    UpdateChart();
-});
+
+        UpdateDateLabels(currencies_data[0].date);
+        var index = 0;
+        currencies_data.forEach(function (cur, ind) {
+            UpdateDataInCurrencyBlock(cur.name);
+            if (nowSeeCurrenciesIndexes[ind] === currencyMode.can_see) {
+                SetNowSeeCurrenciesPrice(cur.price, index);
+                index++;
+            }
+        })
+        UpdateChart();
+    });
+} if(getDataMode === dataMode._socketio){
+    socket.on('connect', () => {
+        socket.send('Hello from io client');
+    });
+
+    socket.on('message', data => {
+        console.log(data);
+
+        currencies_data = data;
+
+        if (!flag) {
+            ParseDataBeforeStart()
+            flag = true;
+        }
+
+        UpdateDateLabels(currencies_data[0].date);
+        var index = 0;
+        currencies_data.forEach(function (cur, ind) {
+            UpdateDataInCurrencyBlock(cur.name);
+            if (nowSeeCurrenciesIndexes[ind] === currencyMode.can_see) {
+                SetNowSeeCurrenciesPrice(cur.price, index);
+                index++;
+            }
+        })
+        UpdateChart();
+    });
+}
 
 
 
@@ -255,4 +297,28 @@ function TouchCurrency(currencyName) {
         UpdateNowSeeCurrenciesPrices(ind);
     })
     dateLabels = [];
+}
+
+
+var btnWebsocket = document.getElementById("btn-WebSocket");
+var btnSocketIO = document.getElementById("btn-SocketIO");
+
+/*
+функция переключения режима получения данных на websocket
+*/
+function GetDataByWebSocket() {
+    btnSocketIO.classList.add('btn_disabled');
+    btnWebsocket.classList.remove('btn_disabled');
+    getDataMode = dataMode._websocket;
+    flag = false;
+}
+
+/*
+функция переключения режима получения данных на socketio
+*/
+function GetDataBySocketIO() {
+    btnWebsocket.classList.add('btn_disabled');
+    btnSocketIO.classList.remove('btn_disabled');
+    getDataMode = dataMode._socketio;
+    flag = false;
 }

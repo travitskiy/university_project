@@ -1,19 +1,6 @@
 <script src="socket.io.js"></script>
 <script src="EventEmitter.js"></script>
 <script src="websocket-session.js"></script>
-<script>
-    /*    const socket = io('ws://localhost:82');
-
-        socket.on('connect', () => {
-            socket.send('Hello from io client');
-        });
-
-        socket.on('message', data => {
-            console.log(data);
-        });*/
-
-</script>
-
 
 <!DOCTYPE html>
 <html lang="ru">
@@ -32,8 +19,8 @@
         <section>
             <h1>Актуальная информация о самых известных валютах</h1>
             <div class="buttons">
-                <a href="">WebSocket</a>
-                <a class="btn_disabled" href="">SocketIO</a>
+                <a id="btn-WebSocket" href="#" onclick="GetDataByWebSocket()">WebSocket</a>
+                <a id="btn-SocketIO" class="btn_disabled" href="#" onclick="GetDataBySocketIO()">SocketIO</a>
             </div>
         </section>
     </header>
