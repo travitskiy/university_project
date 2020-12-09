@@ -47,7 +47,7 @@
     </section>
     <section class="schedule-wrapper">
         <div class="schedule">
-            <div class="ct-chart ct-major-seventh"></div>
+            <div id="schedule-pic" class="ct-chart ct-major-seventh"></div>
 
         </div>
     </section>
@@ -56,6 +56,21 @@
             <h3>SocketioORwebsocket</h3>
         </section>
     </footer>
+    <script>
+        var schedulePic = document.getElementById("schedule-pic");
+        function queryFunction(x) {
+            if (x.matches) { // If media query matches
+                schedulePic.classList.remove("ct-major-seventh");
+                schedulePic.classList.add(".ct-golden-section");
+            } else {
+                schedulePic.classList.add("ct-major-seventh");
+                schedulePic.classList.remove(".ct-golden-section");
+            }
+        }
+
+        var x = window.matchMedia("(max-width: 1024px)");
+        queryFunction(x) // Call listener function at run time
+    </script>
     <script src = "js_front/scripts_front.js">
 
     </script>

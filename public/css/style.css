@@ -5,7 +5,7 @@ body{
 	"curs info-blocks schedule"
     "footer footer footer";
 	grid-template-rows: 110px 1fr 60px;
-	grid-template-columns: 180px 500px 1fr;
+	grid-template-columns: 10% 25% 1fr;
 	height: 100vh;
 	margin: 0;
 	font-family: 'Roboto', sans-serif;
@@ -238,7 +238,46 @@ footer>section>h3{
     overflow: auto; /* Добавляем полосы прокрутки */
 	padding: 0; /* Поля вокруг текста */
     border: solid 0 black; /* Параметры рамки */
-} 
+}
+
+
+@media screen and (max-width: 1560px) {
+	body{
+		display: grid;
+		grid-template-areas:
+		"header"
+		"schedule"
+		"curs"
+		"info-blocks";
+
+		grid-template-rows: 10% 1fr 6% 25%;
+		grid-template-columns: 1fr;
+	}
+	header>section {
+		width: 100%;
+	}
+	header>section>h1{
+		display: none;
+	}
+	.scrollable-wrapper-column {
+		margin-top: 0;
+		margin-bottom: 0;
+		flex-flow: row nowrap;
+	}
+	header .buttons {
+		width: 100%;
+	}
+	.info-block {
+		width: unset;
+	}
+	.schedule{
+		overflow: scroll;
+	}
+	footer{
+		display: none;
+	}
+}
+
 
 
 
