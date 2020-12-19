@@ -36,7 +36,11 @@ describe("load tests", () => {
             })
         })
     }
-    function outputToFile(filename, successConnected, notConnected, timeConnect, timeDisconnect,averageDiffFromAll ){
+    function outputToFile(filename, successConnected, notConnected, timeConnect, timeDisconnect,averageDiffFromAll) {
+        let dir = require('path').dirname(filename);
+        if (!fs.existsSync(dir))
+            fs.mkdirSync(dir);
+
         let linesToOutPut = []
         linesToOutPut.push(`Подключено успешно клиентов: ${successConnected}`)
         linesToOutPut.push(`Не удалось подключится: ${notConnected}`)
@@ -69,6 +73,7 @@ describe("load tests", () => {
         let clientsDate = []
         let notConnected = 0
         let timeConnectStart = new Date().getTime()
+
         for (let i = 0; i < n; i++) {
             let clientDateReceivedMsg = []
             try {
