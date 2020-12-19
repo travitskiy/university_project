@@ -9,13 +9,19 @@ app.use("/", [express.static('public')]);
 const httpServer = http.createServer(app);
 
 module.exports = class HttpServer {
-    static start(port) {
-        if(HttpServer.started)
-            return;
-        HttpServer.started = true;
 
-        httpServer.listen(port, '0.0.0.0', (error) =>
-            console.log(error === undefined ? "http server started".green : `error start http server ${error}`.red));
+
+    static start(port, callback = undefined) {
+        if (HttpServer.started)
+            return;
+
+        httpServer.listen(port, '0.0.0.0', (error) => {
+            console.log(error === undefined ? "http server started".green : `error start http server ${error}`.red)
+            HttpServer.started = true
+            if(callback)
+                callback(error)
+        });
+
         return httpServer;
     }
 };
