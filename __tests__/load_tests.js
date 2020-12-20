@@ -56,7 +56,8 @@ describe("load tests", () => {
         return new Promise((resolve, reject) => {
             const socket = io(address, {
                 timeout: 1000,
-                reconnection: false
+                reconnection: false,
+                forceNew: true
             });
 
             socket.on('connect', () => {
