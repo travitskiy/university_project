@@ -5,8 +5,8 @@
   "main": "src/http-server.js",
   "scripts": {
     "start-servers": "node ./src/index.js",
-    "start-load-test": "jest ./__tests__/load_tests.js",
-    "start-servers-test": "jest ./__tests__/servers_tests.js"
+    "start-load-test": "jest ./__tests__/load_tests.js --runInBand",
+    "start-servers-test": "jest ./__tests__/servers_tests.js --runInBand"
   },
   "keywords": [],
   "author": "",

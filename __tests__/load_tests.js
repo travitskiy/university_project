@@ -36,6 +36,7 @@ describe("load tests", () => {
             })
         })
     }
+
     function outputToFile(filename, successConnected, notConnected, timeConnect, timeDisconnect,averageDiffFromAll) {
         let dir = require('path').dirname(filename);
         if (!fs.existsSync(dir))
@@ -101,10 +102,9 @@ describe("load tests", () => {
             done()
         }, 5000)
 
-    }, 1000 * 60)
+    }, 1000 * 60 * 5)
 
     test.each([10, 100, 1000, 2000, 5000])('определение отклонения скорости передачи данных с сервера SocketIO при подключении %i клиентов', async (n, done) => {
-
         let sockets = []
         let clientsDate = []
         let notConnected = 0
@@ -134,5 +134,5 @@ describe("load tests", () => {
             outputToFile(`./tests_output/${expect.getState().currentTestName}.txt`, sockets.length, notConnected,timeConnect, timeDisconnect, averageDiffFromAll);
             done()
         }, 5000)
-    }, 1000 * 60)
+    }, 1000 * 60 * 5)
 })
